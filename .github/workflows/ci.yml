@@ -1,0 +1,41 @@
+name: Validate ClearPath
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: npm run build
+      - run: bash scripts/package-lambda.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-build
+          path: |
+            dist/
+            work/clearpath-lambda.zip
+          retention-days: 7
+  infrastructure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'cfn-lint>=1,<2'
+      - run: cfn-lint infra/template.yaml infra/bootstrap.yaml
+      - run: bash -n scripts/package-lambda.sh scripts/deploy-aws.sh scripts/smoke-live.sh
