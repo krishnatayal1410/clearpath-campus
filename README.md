@@ -8,7 +8,7 @@ Built for [First Commit 2026](https://www.wemakedevs.org/aws/first-commit), with
 
 **[Open the live browser demo](https://clearpath-campus.vercel.app)** — hosted on Vercel, with the real AWS open-source Cedar engine running as WebAssembly in your browser and localStorage persistence. This live URL does not have a deployed cloud API.
 
-**Current status:** the local Node/SQLite application builds and its eight automated tests pass. The route-changing verification flow has also been checked in Brave. AWS deployment infrastructure is prepared but has not been deployed. This is a **Build It** entry using Cedar; it does not claim Ship It status. The submission video is pending. Intended repository: [krishnatayal1410/clearpath-campus](https://github.com/krishnatayal1410/clearpath-campus); publication is pending at this documentation checkpoint.
+**[Browse the public source](https://github.com/krishnatayal1410/clearpath-campus).** The local Node/SQLite application builds and all **nine automated tests pass**. The route-changing verification flow was checked in Brave against the local connected API. The Vercel site returns HTTP 200; browser workflow verification of that public deployment remains pending. AWS infrastructure is prepared but has not been deployed. This is prepared for **Build It** using Cedar; it does not claim Ship It status. The required YouTube video and event submission remain pending. See the [delivery checkpoint](docs/STATUS.md).
 
 > Greenfield Campus, its map, distances, people, reports and repairs are fictional demonstration data. Use sample information only. This application does not send maintenance requests to a real institution or provide real-world navigation guidance.
 
@@ -97,7 +97,7 @@ npm test
 npm run build
 ```
 
-The eight tests exercise real Cedar schema validation and denials, repair-to-route behavior, step-free and disconnected routes, invalid transitions and stale writes, reopening, session isolation and token rotation, and conditional SQLite revisions. A successful build and these tests do not establish live cloud availability or accessibility certification.
+The nine tests exercise real Cedar schema validation and denials, repair-to-route behavior, step-free and disconnected routes, invalid transitions and stale writes, reopening, verification evidence, session isolation and token rotation, and conditional SQLite revisions. A successful build and these tests do not establish live cloud availability or accessibility certification. The local connected route was verified in Brave: resolving `CP-1040` changed the seeded 745 m route to 120 m. The Vercel deployment still needs equivalent browser workflow verification.
 
 The role switch is intentionally available to explore the demo; it is **not production staff identity verification**. Browser storage is editable by its user, and browser-only policy checks are not a security boundary. API workspaces isolate demonstrations, not verified campus organizations. Authentication, real campus surveys, community moderation and testing with disabled students and facilities teams remain future work. The UI's fonts load from Google Fonts with local fallbacks.
 
@@ -109,4 +109,4 @@ The role switch is intentionally available to explore the demo; it is **not prod
 - [Demo recording script](docs/DEMO-SCRIPT.md)
 - [Credits and dependency licences](docs/CREDITS.md)
 
-Created with assistance from **Codex using GPT-6** for research, implementation, design iteration, tests and documentation. The project does not train or contain a new proprietary language model. Original project code is provided under the [MIT License](LICENSE), copyright Krishna Tayal, 2026. Dependencies, icons and fonts retain their own licences.
+Prepared as a solo entry for Krishna Tayal, **primarily implemented by OpenAI Codex using GPT-6**. Codex performed research, code generation, design iteration, tests and documentation under the user's instruction. This does not claim unaided manual coding, review or learning by the entrant. The project does not train or contain a new proprietary language model. Original project code is provided under the [MIT License](LICENSE), copyright Krishna Tayal, 2026. Dependencies, icons and fonts retain their own licences.

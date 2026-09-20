@@ -4,6 +4,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 stack_name="${CLEARPATH_STACK:-clearpath-demo}"
 region="${AWS_REGION:-us-east-1}"
+reserved_concurrency="${CLEARPATH_LAMBDA_CONCURRENCY:--1}"
 if [[ ! "$stack_name" =~ ^[a-zA-Z][a-zA-Z0-9-]{0,39}$ ]]; then
   echo 'CLEARPATH_STACK must start with a letter and contain 1–40 letters, numbers, or hyphens.' >&2
   exit 1
@@ -41,7 +42,7 @@ aws cloudformation deploy \
   --stack-name "$stack_name" \
   --template-file infra/template.yaml \
   --capabilities CAPABILITY_IAM \
-  --parameter-overrides "ArtifactBucket=$artifact_bucket" "ArtifactKey=$artifact_key" \
+  --parameter-overrides "ArtifactBucket=$artifact_bucket" "ArtifactKey=$artifact_key" "LambdaReservedConcurrency=$reserved_concurrency" \
   --no-fail-on-empty-changeset \
   --tags Application=ClearPath DataClassification=SyntheticDemoOnly
 
@@ -60,10 +61,13 @@ distribution_id="$(get_output DistributionId)"
 site_url="$(get_output SiteUrl)"
 
 # Hashed assets go first, shell last. Retaining the old assets avoids broken open tabs.
-aws s3 sync dist/ "s3://$web_bucket/" --region "$region" --exclude index.html --cache-control 'public,max-age=31536000,immutable' --only-show-errors
+aws s3 sync dist/assets/ "s3://$web_bucket/assets/" --region "$region" --cache-control 'public,max-age=31536000,immutable' --only-show-errors
+aws s3 sync dist/ "s3://$web_bucket/" --region "$region" --exclude 'assets/*' --exclude index.html --cache-control 'public,max-age=300' --only-show-errors
 aws s3 cp dist/index.html "s3://$web_bucket/index.html" --region "$region" --content-type 'text/html; charset=utf-8' --cache-control 'no-cache,max-age=0,must-revalidate' --only-show-errors
 aws cloudfront create-invalidation --distribution-id "$distribution_id" --paths /index.html / --output json > work/invalidation.json
 aws cloudfront wait distribution-deployed --id "$distribution_id"
+invalidation_id="$(node --input-type=module -e "import {readFileSync} from 'node:fs'; console.log(JSON.parse(readFileSync('work/invalidation.json','utf8')).Invalidation.Id);")"
+aws cloudfront wait invalidation-completed --distribution-id "$distribution_id" --id "$invalidation_id"
 bash scripts/smoke-live.sh "$site_url"
 echo "Deployed and read-only smoke checked: $site_url"
 echo 'Stack output receipt: work/deployment-outputs.json'

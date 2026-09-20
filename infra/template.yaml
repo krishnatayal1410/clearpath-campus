@@ -32,6 +32,14 @@ Parameters:
     MinValue: 1
     MaxValue: 20
     Description: API target steady-state requests per second; not a billing ceiling.
+  LambdaReservedConcurrency:
+    Type: Number
+    Default: -1
+    MinValue: -1
+    MaxValue: 20
+    Description: '-1 omits reservation for new-account quotas; 1–20 caps concurrency when account headroom permits; 0 disables invocation.'
+Conditions:
+  ReserveLambdaConcurrency: !Not [!Equals [!Ref LambdaReservedConcurrency, -1]]
 Resources:
   WorkspaceTable:
     Type: AWS::DynamoDB::Table
@@ -41,7 +49,7 @@ Resources:
       com.aws.cloudformation.Context:
         why: Durable isolated workspaces and opaque session records; on-demand capacity suits sporadic demos.
         must:
-          - Keep PK and SK string keys and expiresAt TTL aligned with server/store.mjs.
+          - Keep PK and SK string keys and expiresAt TTL aligned with server/dynamodb.mjs.
           - Retained table requires separate owner cleanup after stack deletion.
     Properties:
       BillingMode: PAY_PER_REQUEST
@@ -61,8 +69,8 @@ Resources:
         AttributeName: expiresAt
         Enabled: true
       OnDemandThroughput:
-        MaxReadRequestUnits: 50
-        MaxWriteRequestUnits: 25
+        MaxReadRequestUnits: 200
+        MaxWriteRequestUnits: 512
       Tags:
         - Key: Application
           Value: ClearPath
@@ -122,7 +130,7 @@ Resources:
       Role: !GetAtt FunctionRole.Arn
       MemorySize: 512
       Timeout: 15
-      ReservedConcurrentExecutions: 5
+      ReservedConcurrentExecutions: !If [ReserveLambdaConcurrency, !Ref LambdaReservedConcurrency, !Ref 'AWS::NoValue']
       Code:
         S3Bucket: !Ref ArtifactBucket
         S3Key: !Ref ArtifactKey

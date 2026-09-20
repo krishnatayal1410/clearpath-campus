@@ -71,6 +71,20 @@ test('a reporter can reopen a failed repair and return its path to the blocked s
   assert.throws(() => mutate(initial, { type: 'reopen', id: 'CP-1039' }, actor('facilities')), e => e.code === 'FORBIDDEN');
 });
 
+test('verification keeps its inspection evidence and failed checks can reopen before resolution', () => {
+  const initial = seedState('test');
+  const note = 'Checked the full doorway width and confirmed the door opens without sticking.';
+  const verified = mutate(initial, { type: 'verify', id: 'CP-1040', payload: { note } }, actor('verifier'));
+  assert.equal(verified.reports.find(r => r.id === 'CP-1040').verificationNote, note);
+  assert.ok(verified.activity[0].message.includes(note));
+  const reopened = mutate(verified, { type: 'reopen', id: 'CP-1040', payload: { note: 'The same door sticks again during the follow-up check.' } }, actor('verifier'));
+  assert.equal(reopened.reports.find(r => r.id === 'CP-1040').verificationNote, undefined);
+  assert.ok(blockedEdgeIds(reopened.reports).has('north-library'));
+  const rejected = mutate(initial, { type: 'reopen', id: 'CP-1040', payload: { note: 'The door still requires too much force to open.' } }, actor('verifier'));
+  assert.equal(rejected.reports.find(r => r.id === 'CP-1040').status, 'Reported');
+  assert.throws(() => mutate(initial, { type: 'verify', id: 'CP-1040', payload: { note: 'OK' } }, actor('verifier')), DomainError);
+});
+
 test('API derives authorization from opaque sessions and isolates each workspace', async t => {
   const store = createSQLiteStore(':memory:'); t.after(() => store.close()); const service = createService(store);
   const call = (method, path, body = {}, token) => service({ method, path, body, headers: token ? { authorization: `Bearer ${token}` } : {} });

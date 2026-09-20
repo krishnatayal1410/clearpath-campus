@@ -1,58 +1,81 @@
-# ClearPath — 2 minute 30 second demo plan
+# ClearPath — 2 minute 20 second recording script
 
-Recording target: about 2:30, with a hard final duration below 3:00. This script describes the intended working demonstration. Rehearse against the final implementation, correct any mismatched controls, and remove claims that cannot be shown. All campus information and repair events are fictional demonstration data. Record in Brave as requested by the project owner.
+Status: recording and required YouTube upload remain pending. The local connected API flow was verified in Brave: resolving CP-1040 changed the North Gate–Central Library route from 745 m to 120 m. The public Vercel browser demo returns HTTP 200, but its browser workflows still need verification before recording this script.
 
-## Before recording
+Audio preparation: 242 narrated words, stock macOS Samantha voice, 140-second timeline. Narration and sentence-timed captions are prepared in the parent workspace’s `work/demo/` directory. These audio assets are not a completed UI demonstration video.
 
-- Use a clean fictional campus state with two known routes between the chosen places. Confirm a report blocks the intended edge, verification reopens it, and every stated distance comes from the app.
-- Choose a report that supports the real implemented repair and verification workflow. Do not pretend to perform a physical repair.
-- Keep tokens, credentials, unrelated account information and private tabs out of the recording.
-- Prepare the actual policy result and persistence evidence. Show AWS cloud resources only if this application was deployed and verified there.
+## Recording mode
 
-## 0:00–0:20 — Why access changes
+This script is written for the [public Vercel browser demo](https://clearpath-campus.vercel.app), which runs Cedar WASM with localStorage and has no deployed cloud API. Check that its controls work first, then capture the actual Brave interface. Show the full URL and fictional-data label. The local Node/SQLite backend is separate. AWS cloud deployment is prepared, not deployed.
 
-**On screen:** ClearPath overview; fictional-data label visible.
+If recording the local connected application instead, identify it as local and replace the browser/localStorage narration with the actual SQLite persistence behavior. Do not use narration for one mode over footage of the other. Do not present a reconstructed interface, static mockup or audio-only clip as a working application recording.
 
-**Narration:** “A campus can have an accessible ramp and still be inaccessible today because that ramp is blocked. ClearPath connects the student's route with the campus repair desk. This is a fictional campus, so we can demonstrate the complete workflow without claiming these paths or incidents are real.”
+## Prepare the sample workspace
 
-## 0:20–0:45 — Route before the barrier
+- Confirm a fresh seeded workspace, CP-1040 awaiting verification and a step-free North Gate–Central Library route of 745 m.
+- Use only fictional report and repair notes. The actions simulate a repair workflow; no physical repair occurred.
+- Close unrelated private tabs, and keep tokens and account information outside the capture.
+- Allow time for actions. If the workflow exceeds the cue, trim idle footage or retime the narration honestly; keep the finished video strictly under three minutes.
 
-**On screen:** Select start and destination; calculate the step-free route. Point to the map and text directions.
+## 0:00–0:15 — The problem and live overview
 
-**Narration:** “I choose my starting point and destination. ClearPath calculates a step-free route through the campus graph. The map and written directions describe the same journey. Now I report an obstruction on the ramp this route uses, with its location and a short description.”
+**On screen:** Show the live Vercel URL and Overview. Keep the DEMONSTRATION CAMPUS label visible. Do not suggest this is a real university's maintenance system.
 
-## 0:45–1:10 — Route changes after the report
+**Narration:** “A campus can have an accessible entrance and still be inaccessible today. ClearPath connects barrier reports, repairs, and the route someone needs. Greenfield Campus and every incident here are fictional demonstration data.”
 
-**On screen:** Submit the report; recalculate the same journey; inspect the alternate path and the incident.
+## 0:15–0:30 — Seeded detour
 
-**Narration:** “The report becomes an active barrier. Calculating the same journey now avoids that segment and shows the alternative. The incident remains visible, so the student can understand why their route changed. A missing route must be shown honestly; the application cannot promise a usable path where none is known.”
+**On screen:** Open Find a clear path. Select North Gate and Central Library, step-free enabled. Calculate. Hold on 745 m, the route and written path. Start in a fresh seeded workspace.
 
-## 1:10–1:40 — Repair, then verify
+**Narration:** “First, choose North Gate to Central Library with step-free routing. An entrance repair is awaiting verification, so its path stays blocked. The current sample route is seven hundred forty-five meters.”
 
-**On screen:** Open the facilities view, locate the incident, record the implemented repair stage, and complete the authorized verification stage.
+## 0:30–0:48 — Independent verification
 
-**Narration:** “At the repair desk, the team can see what needs attention. I record the simulated repair, then complete the verification step with the appropriate demonstration role. Repair and verification are distinct. The history explains who changed the record and when. This is a software workflow demonstration, not a claim that a real ramp was repaired.”
+**On screen:** Switch role to Access champion. Open CP-1040: North entrance door needs adjustment. Enter: Demo check: the entrance now opens freely. Click Verify & reopen path.
 
-## 1:40–2:00 — Route after verified reopening
+**Narration:** “Switch to Access champion and open the entrance report. Add a verification note, then verify and reopen the path. Recording a repair alone does not restore access; the verification step does.”
 
-**On screen:** Return to the original start and destination; recalculate; show reopened segment. Refresh and show persisted state in the verified backend mode.
+## 0:48–1:01 — Shorter route after verification
 
-**Narration:** “After verification, the segment becomes available again. The same journey can use it, and refreshing preserves the updated record. The loop is complete: report, avoid the barrier, repair, verify, and restore the route.”
+**On screen:** Close the modal, return to Find a clear path with the same endpoints, calculate and hold on 120 m. Keep any existing route state in view only if it reflects the new result.
 
-## 2:00–2:20 — Show real AWS use
+**Narration:** “Calculate the same journey again. The reopened direct path is one hundred twenty meters. These distances come from the fictional graph, not a real-world impact study.”
 
-**On screen:** Actual Cedar policy and allow/deny results, including a denied protected action. If available, show the real AWS deployment briefly.
+## 1:01–1:23 — Create a report
 
-**Narration:** “Cedar is the AWS open-source component behind the permission decisions. The browser explains available actions, and the Node backend independently enforces the policy before protected changes. Here is an unauthorized action being denied.”
+**On screen:** Switch Student. Report a barrier. Use sample title Library approach obstructed; location Central Library; connected North Gate-Central Library path; type Entrance; description Demo obstacle blocks independent access at the library entrance.; priority High. Submit. Use whichever connected-path label the form actually displays.
 
-**Only if verified:** “This deployed application runs on [actual AWS services].” Otherwise state the actual local runtime and storage; omit cloud claims.
+**Narration:** “Now switch to Student and create a sample barrier report. Choose its location, affected path, description, and priority. The new issue appears in the repair queue with its status.”
 
-## 2:20–2:30 — Scope and disclosure
+## 1:23–1:43 — Repair workflow
 
-**On screen:** Project and source links; concise scope statement.
+**On screen:** Switch Facilities, open the new report, Start repair. Enter: Demo obstacle removed and entrance checked. Send for verification. Hold on Awaiting verification, then switch Access champion. Do not label the role switch as real staff authentication.
 
-**Narration:** “ClearPath demonstrates how route information and repair responsibility can stay connected. The next step is testing with disabled students and facilities staff on a verified campus. Built with assistance from Codex using GPT-6.”
+**Narration:** “As Facilities, start the repair and record what was done. The issue moves to awaiting verification and remains a routing barrier. An Access champion can then verify the simulated fix.”
 
-## Release check
+## 1:43–1:56 — History and persistence
 
-Check actual video length, audible narration, readable text and accurate captions. Upload to YouTube as public or unlisted and open the link in a signed-out browser. Add the final URL to [SUBMISSION.md](SUBMISSION.md). Do not submit an unfinished recording or replace actual application evidence with a narrated mockup.
+**On screen:** Add verifier note: Demo check confirms the entrance is unobstructed. Verify & reopen path. Show Progress & activity, then refresh the same browser page and show persisted sample state.
+
+**Narration:** “The activity history makes each transition visible. This live browser demo stores changes locally, so refreshing preserves this browser's sample workspace.”
+
+## 1:56–2:12 — Real AWS open-source use
+
+**On screen:** Open the app's About/How it works modal to show AWS, doing real work and actual Cedar decision. If recorded source/test evidence is available, show it briefly; otherwise leave the app visible and avoid implying the local backend powers this public URL. Do not display the AWS console as a deployed proof.
+
+**Narration:** “This Build It project runs AWS Cedar locally as WebAssembly. The separate local Node and SQLite backend passed nine tests, including authorization denials. AWS cloud deployment is prepared, not deployed.”
+
+## 2:12–2:20 — Disclosure and close
+
+**On screen:** Hold on the ClearPath overview or About modal. End by 2:20. The voice is stock macOS Samantha, not the user's voice.
+
+**Narration:** “Built with Codex using GPT-6. Stock synthetic narration. ClearPath: campus access, kept open.”
+
+## Publication check
+
+- Watch the final clip, confirm visible action results and accurate storage/deployment claims, and check its actual duration.
+- Include readable captions; identify the narration as a stock synthetic voice rather than the entrant’s voice.
+- Upload the finished recording to YouTube as public or unlisted. Open the link signed out.
+- Record the final YouTube URL in [SUBMISSION.md](SUBMISSION.md), then submit the form and retain its success confirmation.
+
+Public repository: [krishnatayal1410/clearpath-campus](https://github.com/krishnatayal1410/clearpath-campus). The project is a solo entry primarily implemented by OpenAI Codex using GPT-6; the recording must not imply unaided manual coding or unverified learning by the entrant.

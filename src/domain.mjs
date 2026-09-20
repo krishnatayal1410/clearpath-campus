@@ -146,13 +146,16 @@ export function mutate(state, action, principal) {
     case 'verify':
       requireRole('verifier'); requireStatus('Awaiting verification');
       if (report.repairedBy === principal.id) reject('The repair must be verified by a different person.', 'FORBIDDEN', 403);
+      report.verificationNote = payload.note === undefined
+        ? 'Independent accessibility check completed.'
+        : text(payload.note, 'Verification note', 12, 2000);
       report.status = 'Resolved'; report.verifiedBy = principal.id; report.verifiedAt = now;
-      message = 'Independently verified the repair. The path is available again.'; break;
+      message = `Independently verified the repair: ${report.verificationNote} The path is available again.`; break;
     case 'reopen':
       if (principal.role !== 'verifier' && report.reporter !== principal.id) reject('Only the reporter or a verifier can reopen this report.', 'FORBIDDEN', 403);
       requireStatus('Awaiting verification', 'Resolved');
       report.status = 'Reported'; report.reopenNote = text(payload.note ?? 'The barrier remains and needs another inspection.', 'Reopen note', 12, 2000);
-      report.repairedBy = ''; delete report.verifiedBy; delete report.verifiedAt;
+      report.repairedBy = ''; delete report.verifiedBy; delete report.verifiedAt; delete report.verificationNote;
       message = `Reopened for repair: ${report.reopenNote}`; break;
   }
   if (action.type !== 'create') { report.version += 1; report.updatedAt = now; }

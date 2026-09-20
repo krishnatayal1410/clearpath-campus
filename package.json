@@ -1,1 +1,31 @@
-{"name":"clearpath-campus","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"vite --host 127.0.0.1","server":"node server/local.mjs","build":"tsc -b && vite build","preview":"vite preview --host 127.0.0.1","test":"node --test tests/*.test.mjs"},"dependencies":{"@cedar-policy/cedar-wasm":"4.13.0","@aws-sdk/client-dynamodb":"^3.0.0","@aws-sdk/lib-dynamodb":"^3.0.0","express":"^5.1.0","lucide-react":"^0.468.0","react":"^19.0.0","react-dom":"^19.0.0","zod":"^4.0.0"},"devDependencies":{"@types/react":"^19.0.0","@types/react-dom":"^19.0.0","@vitejs/plugin-react":"^4.3.4","typescript":"^5.7.3","vite":"^6.1.0","vite-plugin-wasm":"^3.4.1"}}
+{
+  "name": "clearpath-campus",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "server": "node server/local.mjs",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@cedar-policy/cedar-wasm": "4.13.0",
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "express": "^5.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vite-plugin-wasm": "^3.4.1"
+  }
+}

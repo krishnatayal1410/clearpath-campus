@@ -1,6 +1,6 @@
 # ClearPath — submission draft
 
-Status: submission preparation in progress, 20 September 2026. The browser demo is deployed on Vercel and its route-verification flow has been checked in Brave. The local Node/SQLite backend is tested, with eight tests passing. An AWS cloud deployment, YouTube upload and event submission remain pending. The deployed browser demo uses localStorage and real Cedar WebAssembly; it has no live cloud API.
+Status: submission preparation in progress, 20 September 2026. The repository is public. The Vercel browser demo returns HTTP 200 but still needs browser workflow verification. The local connected Node/SQLite application was tested in Brave, and all nine automated tests pass. AWS cloud deployment, the required YouTube video and event submission remain pending. The public demo uses localStorage and real Cedar WebAssembly; it has no live cloud API. Entrant age, eligibility and Builder Center verification remain unverified.
 
 ## Form fields
 
@@ -12,7 +12,7 @@ Status: submission preparation in progress, 20 September 2026. The browser demo 
 | Project title | **ClearPath — Campus Access, Kept Open** |
 | Build It checkbox | **Select.** Working AWS open-source Cedar integration in the browser and local Node API; show it in the required video. |
 | Ship It checkbox | **PENDING: select only after a working AWS deployment is verified.** A deployment on another provider alone does not establish Ship It eligibility. |
-| Public project repository URL | **PENDING: create/publish and verify public access.** The leader's profile above is not a project repository. |
+| Public project repository URL | **https://github.com/krishnatayal1410/clearpath-campus** — published public repository. |
 | Deployed URL — optional form field | **https://clearpath-campus.vercel.app** — live browser demo hosted on Vercel; Cedar WASM and localStorage, without a live cloud API. |
 | YouTube demo URL — required | **PENDING: upload a public or unlisted video strictly under three minutes; verify signed-out access.** |
 
@@ -20,7 +20,7 @@ Status: submission preparation in progress, 20 September 2026. The browser demo 
 
 A campus may have an accessible entrance on its map, but that information stops helping when a ramp is blocked or a lift is out of service. Students need an alternate route immediately, while facilities staff need enough context to fix the barrier and communicate that access is restored.
 
-ClearPath connects those two needs. A student reports a barrier on a campus path; the route planner avoids it; the repair desk tracks the issue; and a verified repair allows the route to reopen. The demonstrated North Gate–Central Library route changes from a 745 m detour to a 120 m direct path after verification of the sample entrance repair. These are simulated graph distances, not measured benefits for real students. The demonstration uses a fictional campus and simulated incidents. Its focus is one complete, understandable operational loop.
+ClearPath connects those two needs. A student reports a barrier on a campus path; the route planner avoids it; the repair desk tracks the issue; and a verified repair allows the route to reopen. In the local connected application tested in Brave, the North Gate–Central Library route changed from a 745 m detour to a 120 m direct path after verification of sample entrance repair CP-1040. These are simulated graph distances, not measured benefits for real students. The demonstration uses a fictional campus and simulated incidents. Its focus is one complete, understandable operational loop.
 
 The problem is grounded in UGC's guidance on campus mapping, infrastructure maintenance and accessible grievance handling. Sources and the scope of this research are in [RESEARCH.md](RESEARCH.md).
 
@@ -36,29 +36,25 @@ Cloud deployment remains pending. AWS Lambda and DynamoDB are the proposed cloud
 
 ## Team leader contributions
 
-The leader commissioned and directed the project concept, implementation, interface, testing and submission preparation using AI assistance. The draft is being developed with **Codex using GPT-6** for research, code, design iteration, verification assistance and documentation. This is a disclosure of the coding tool used, not a claim that a new model was trained or that ClearPath contains a proprietary model.
-
-**PENDING: leader review.** Record only actions the leader actually performed and the actual division of work. Do not describe generated code as unaided manual work, invent interviews, or claim learning outcomes the leader has not demonstrated. Credit third-party libraries, templates and assets in the repository.
+This is a solo entry for Krishna Tayal. The entrant requested and authorized the project build, deployment and submission preparation, and specified use of Brave. The project was **primarily implemented by OpenAI Codex using GPT-6**, including research, code generation, interface design, tests and documentation. This disclosure does not claim that the entrant manually wrote or reviewed the generated code, conducted user interviews, or demonstrated particular learning outcomes. Dependencies and assets are credited in the repository.
 
 ## What could be improved about AWS
 
-Draft product feedback, to retain only if confirmed during implementation: a single maintained Cedar example covering a modern browser build, a Node API, the same policies, test fixtures and deployment would make the route from a local prototype to a hosted application easier to understand. Documentation should make the distinction between browser permissions hints and authoritative server enforcement especially clear.
-
-Do not present an unobserved outage, billing issue, performance problem or support experience as something this team encountered. Add concrete encountered friction after verification, if any.
+The Cedar integration required different loading paths for Node and the browser, plus Vite WebAssembly setup and asynchronous loading. The generated browser WASM asset is 4,318,628 bytes, approximately 4.3 MB before HTTP compression, which is a meaningful initial-load consideration for a small interface. A concise maintained example covering shared policies, Node enforcement, browser loading and bundler setup would make this integration easier. This feedback concerns the open-source Cedar implementation experience; no cloud performance or billing experience is claimed.
 
 ## What worked well about AWS
 
-The local Cedar option makes authorization a visible part of the product without requiring a cloud account merely to develop the policy logic. The intended benefit is a readable permission model for a sensitive workflow: reporting a barrier is different from declaring that access has been restored.
-
-**PENDING: verify and personalize.** Add one tested example from this build. Do not describe Lambda, DynamoDB, credits or cloud performance as a positive personal experience before they are actually used.
+Cedar made the authorization rules inspectable and testable. The schema check catches policy mismatches, and default-deny behavior supports a workflow where creating a report does not grant permission to declare a repair verified. Tests exercise denials for cross-workspace access, student repairs and self-verification. The same policy definitions serve the browser demonstration and the separate local Node API. This allowed real AWS open-source functionality to be demonstrated without first provisioning cloud services.
 
 ## Event completion checklist
 
 - [ ] Confirm university enrollment in India, age 18+, tour registration, event check-in and accurate team details.
 - [ ] Verify Builder Center student status or an open SheerID case; the latter permits current-event submission and judging while verification is resolved.
-- [ ] Preserve genuinely new event-period work and accurate Git history. Credit dependencies and disclose AI tools.
+- [x] Publish the project repository, dependency credits and AI-tool disclosure.
+- [ ] Confirm event-period originality and accurate Git history against the entry rules.
 - [ ] Demonstrate actual AWS open-source or cloud functionality.
-- [ ] Publish the repository, YouTube video under three minutes and short writeup; verify public/signed-out access.
+- [ ] Finish the short writeup and YouTube video under three minutes; verify signed-out video access.
+- [ ] Verify the public Vercel demo's browser workflows, separate from the completed local Brave test.
 - [ ] Confirm the exact cutoff in the event form and submit once per team before it closes.
 - [ ] Save the successful submission confirmation and submitted links.
 
